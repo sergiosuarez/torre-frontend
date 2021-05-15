@@ -27,5 +27,3 @@ Support this Project!
 This project is run by Sergio Suarez. Please support him in their efforts to maintain and improve your skills with your comments :)
 
 * Sergio Suarez Cruz, Core Developer & Project Lead (`GitHub <https://github.com/sergiosuarez>`): expertise in Python/Django, hands-on Geo Apps and frontend-frontend experience.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~
