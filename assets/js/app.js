@@ -12,7 +12,7 @@ var properties = [{
   value: "id",
   label: "ID",
   table: {
-    visible: true
+    visible: false
   },
   filter: {
     type: "string"
@@ -22,7 +22,8 @@ var properties = [{
   value: "verified",
   label: "Verified",
   table: {
-    visible: true
+    visible: true,
+    sortable: true
   },
   filter: {
     type: "string",
@@ -36,7 +37,7 @@ var properties = [{
   
 {
   value: "weight",
-  label: "weight",
+  label: "Weight",
   table: {
     visible: true,
     sortable: true
@@ -49,7 +50,7 @@ var properties = [{
   value: "Lat",
   label: "latitud",
   table: {
-    visible: true,
+    visible: false,
     sortable: true
   },
   filter: {
@@ -60,7 +61,7 @@ var properties = [{
   value: "Long",
   label: "longitud",
   table: {
-    visible: true,
+    visible: false,
     sortable: true
   },
   filter: {
@@ -70,7 +71,7 @@ var properties = [{
 
 {
   value: "name",
-  label: "name",
+  label: "Name",
   table: {
     visible: true,
     sortable: true
@@ -81,7 +82,7 @@ var properties = [{
 },
 {
   value: "locationName",
-  label: "locationName",
+  label: "City, Country",
   table: {
     visible: true
   },
@@ -91,7 +92,7 @@ var properties = [{
 },
 {
   value: "openTo",
-  label: "openTo",
+  label: "Open to",
   table: {
     visible: true,
     sortable: true
@@ -106,7 +107,7 @@ var properties = [{
   value: "picture",
   label: "picture",
   table: {
-    visible: true,
+    visible: false,
     sortable: true
   },
   filter: {
@@ -154,9 +155,9 @@ function drawCharts() {
 
   // conteo tipo de boletines
   $(function() {
-    var result = alasql("SELECT reporte AS label, COUNT(*) AS total FROM ? GROUP BY reporte", [features]);
-    var columns = $.map(result, function(reporte) {
-      return [[reporte.label, reporte.total]];
+    var result = alasql("SELECT verified AS label, COUNT(*) AS total FROM ? GROUP BY verified", [features]);
+    var columns = $.map(result, function(verified) {
+      return [[verified.label, verified.total]];
     });
     var chart = c3.generate({
         bindto: "#zone-chart",
@@ -453,7 +454,12 @@ map.on("moveend", function (e) {
 map.on("click", function(e) {
   highlightLayer.clearLayers();
 });
-
+var t = L.terminator({fillOpacity: 0.4});
+t.addTo(map);
+setInterval(function(){updateTerminator(t)}, 500);
+function updateTerminator(t) {
+  t.setTime();
+}
 // Table formatter to make links clickable
 function urlFormatter (value, row, index) {
   if (typeof value == "string" && (value.indexOf("http") === 0 || value.indexOf("https") === 0)) {
@@ -529,7 +535,7 @@ function syncTable() {
   if (featureCount == 1) {
     $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible feature");
   } else {
-    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible features");
+    $("#feature-count").html($("#table").bootstrapTable("getData").length + " visible features.");
   }
 }
 
