@@ -3,7 +3,7 @@ const urlParams = new URLSearchParams(queryString);
 const skill = urlParams.get('skill')
 const pages = urlParams.get('page')
 var config = {
-  geojson: "http://209.145.62.164:8000/get_request_peoplexskill?parameters="+skill+","+pages,
+  geojson: "http://209.145.62.164:8000/get_request_peoplexskill?parameters="+skill+"|"+pages,
   title: "Torre Map Dashboard",
   layerName: "Users",
   hoverProperty: "name",
@@ -427,12 +427,19 @@ var featureLayer = L.geoJson(null, {
 // Fetch the GeoJSON file
 $.getJSON(config.geojson, function (data) {
   geojson = data;
-  features = $.map(geojson.features, function(feature) {
-    return feature.properties;
-  });
-  featureLayer.addData(data);
-  buildConfig();
-  $("#loading-mask").hide();
+  if(geojson.features.length==0){
+    alert('Sorry there is no data for this query :c')
+    $("#loading-mask").hide();
+    window.location.href = "index.html"
+  }else{
+    features = $.map(geojson.features, function(feature) {
+      return feature.properties;
+    });
+    featureLayer.addData(data);
+    buildConfig();
+    $("#loading-mask").hide();
+  }
+  
 });
 
 var map = L.map("map", {
