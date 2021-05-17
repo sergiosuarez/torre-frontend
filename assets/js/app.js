@@ -2,7 +2,7 @@ var config = {
   geojson: "http://209.145.62.164:8000/get_request_peoplexskill?skill=PYTHON",
   title: "Torre Map Dashboard",
   layerName: "Users",
-  hoverProperty: "id",
+  hoverProperty: "name",
   sortProperty: "name",
   sortOrder: "desc"
 };
@@ -339,9 +339,11 @@ function buildConfig() {
 var GoogleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{  attribution: '&copy; Google Maps - Satellite',   maxZoom: 20,    subdomains:['mt0','mt1','mt2','mt3'] });
 var GoogleHyb = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{  attribution: '&copy; Google Maps - Hibrido',   maxZoom: 20,    subdomains:['mt0','mt1','mt2','mt3']});
 var GoogleMaps = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{  attribution: '&copy; Google Maps',   maxZoom: 20,    subdomains:['mt0','mt1','mt2','mt3']});
-var EsriMap= L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: '&copy; ESRI Maps',  maxZoom: 18,   });
+ var EsriMap= L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: '&copy; ESRI Maps',  maxZoom: 18,   });
+var EsriGRAY= L.tileLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: '&copy; ESRI Maps',  maxZoom: 18,   });
 var OSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contribuitors'});
- 
+var omniscale = L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {  attribution: '&copy; 2021 &middot; <a href="https://maps.omniscale.com/">Omniscale</a> ' +
+'&middot; Map data: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'});
 var highlightLayer = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.circleMarker(latlng, {
@@ -399,8 +401,8 @@ var featureLayer = L.geoJson(null, {
           highlightLayer.addData(featureLayer.getLayer(L.stamp(layer)).toGeoJSON());
         },
         mouseover: function (e) {
-          if (config.hoverProperty) {
-            $(".info-control").html(feature.properties[config.hoverProperty]);
+          if (config.hoverProperty) { 
+            $(".info-control").html('<img src="'+feature.properties['picture']+'" height="100px" width="100px" class="circular--square"><br>'+feature.properties[config.hoverProperty]);
             $(".info-control").show();
           }
         },
@@ -424,7 +426,7 @@ $.getJSON(config.geojson, function (data) {
 });
 
 var map = L.map("map", {
-  layers: [GoogleHyb, featureLayer, highlightLayer]
+  layers: [EsriGRAY, featureLayer, highlightLayer]
 }).fitWorld();
 
 // ESRI geocoder
@@ -457,7 +459,8 @@ if (document.body.clientWidth <= 767) {
 }
 var baseLayers = {
   "Google Hibrido": GoogleHyb,
-  "Google Maps": GoogleMaps
+  "Google Maps": GoogleMaps,
+  "Esri Gray Dark":EsriGRAY
 };
 var overlayLayers = {
   "<span id='layer-name'>GeoJSON Layer</span>": featureLayer
@@ -580,7 +583,7 @@ function identifyFeature(id) {
             }
             content += '<tr><th>Open To</th><td style="text-align:center">'+badges+'</td></tr>';
           }else if(property.label == 'picture'){            
-              content += '<tr><th>picture</th><td style="text-align:center"><img src="'+value.split('\'')[1]+'" height="100px" width="100px"></td></tr>';
+              content += '<tr><th>picture</th><td style="text-align:center"><img src="'+value.split('\'')[1]+'" height="100px" width="100px" class="circular--square"></td></tr>';
           }else if(property.value == 'compensations'){            
             content += '<tr><th>Compensations</th><td style="text-align:center">';
             
