@@ -10,6 +10,25 @@ body {
   height: 45%;
   padding: 0;
 }
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:visited,
+.btn-secondary:focus,
+.btn-default,
+.btn-default:hover,
+.btn-default:active,
+.btn-default:visited,
+.btn-default:focus,
+.leaflet-control,
+.modal-content,
+.panel-primary,
+.list-group{
+    background-color: #222222;
+    border-color: #CDDB49;
+    color: #CDDB49;
+}
+
 
 #table-container { 
   height: 55%;
@@ -17,6 +36,10 @@ body {
   position: relative;
   box-shadow: inset 0 8px 8px -8px #696868;
   background-color: #CDDB49;
+} 
+
+#feature-count{
+  color: #222222;
 }
 
 table {
@@ -27,6 +50,9 @@ table {
   width: 100%;
   max-width: 100%;
   margin-bottom: 1rem;
+  background-color: #222222;
+  border-color: #CDDB49;
+  color: #CDDB49;
 }
 thead th {
   color: #fff;
@@ -37,10 +63,14 @@ tbody tr {
 .table thead th {
   vertical-align: bottom;
   border-bottom: 2px solid #eceeef;
+  color: #eceeef;
 }
 .table td, .table th {
   padding: .75rem;
   vertical-align: top;
+  background-color: #222222;
+  border-color: #CDDB49;
+  color: #CDDB49;
   border-top: 1px solid #eceeef;
 }
 

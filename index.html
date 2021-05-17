@@ -67,12 +67,12 @@
     <div id="table-container">
       <div id="toolbar" style="width: 500px;">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filterModal">
-            <i class="fa fa-filter"></i> Filtro de Datos
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#filterModal">
+            <i class="fa fa-filter"></i> Data Filter
           </button>
-          <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-cloud-download"></i> Exportar Datos <span class="caret"></span>
+          <div class="btn-group" >
+            <button type="button" class="btn btn-secondary  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-cloud-download"></i> Data Export <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
               <li><a href="#" id="download-csv-btn"><i class="fa fa-file-text-o"></i> CSV</a></li>
@@ -108,7 +108,8 @@
                     <li class="list-group-item">Entirely client-side, can be hosted for free on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></li>
                     <li class="list-group-item">Built on the incredibly popular <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> UI framework</li>
                     <li class="list-group-item">Maps via <a href="http://leafletjs.com/" target="_blank">Leaflet</a>, the leading open source JavaScript mapping library</li>
-                    <li class="list-group-item">Interactive data table with sorting, searching, column toggling, and data export via the <a href="http://bootstrap-table.wenzhixin.net.cn/" target="_blank">Bootstrap Table</a> plugin</li>
+                    <li class="list-group-item">Interactive data table with sorting, 
+                      ing, column toggling, and data export via the <a href="http://bootstrap-table.wenzhixin.net.cn/" target="_blank">Bootstrap Table</a> plugin</li>
                     <li class="list-group-item">Advanced, interactive GeoJSON data querying that integrates <a href="http://mistic100.github.io/jQuery-QueryBuilder/index.html" target="_blank">jQuery QueryBuilder</a> with <a href="http://alasql.org/" target="_blank">AlaSQL</a></li>
                     <li class="list-group-item">Advanced charting via <a href="http://c3js.org/" target="_blank">C3.js</a>, the D3-based reusable chart library</li>
                   </ul>
@@ -134,7 +135,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -164,7 +165,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -192,13 +193,13 @@
     <div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" id="feature-top">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Information of Point</h4>
+            <h4 class="modal-title" >User Information</h4>
           </div>
           <div class="modal-body" id="feature-info"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <div class="modal-footer" id="feature-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>

@@ -231,7 +231,7 @@ function buildConfig() {
   filters = [];
   table = [{
     field: "action",
-    title: "<i class='fa fa-gear'></i>&nbsp;Action",
+    title: "<i class='fa fa-gear' ></i>&nbsp;Action",
     align: "center",
     valign: "middle",
     width: "75px",
@@ -240,10 +240,10 @@ function buildConfig() {
     formatter: function(value, row, index) {
       return [
         '<a class="zoom" href="javascript:void(0)" title="Zoom" style="margin-right: 10px;">',
-          '<i class="fa fa-search-plus"></i>',
+          '<i class="fa fa-search-plus"  style="color: #CDDB49"></i>',
         '</a>',
         '<a class="identify" href="javascript:void(0)" title="Identify">',
-          '<i class="fa fa-info-circle"></i>',
+          '<i class="fa fa-info-circle"  style="color: #CDDB49"></i>',
         '</a>'
       ].join("");
     },
@@ -325,21 +325,21 @@ var OSM = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {  attribution:
 var highlightLayer = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.circleMarker(latlng, {
-      radius: 5,
+      radius: 15,
       color: "#FFF",
       weight: 2,
       opacity: 1,
-      fillColor: "#00FFFF",
+      fillColor: "#CDDB49",
       fillOpacity: 1,
       clickable: false
     });
   },
   style: function (feature) {
     return {
-      color: "#00FFFF",
+      color: "#CDDB49",
       weight: 2,
       opacity: 1,
-      fillColor: "#00FFFF",
+      fillColor: "#CDDB49",
       fillOpacity: 0.5,
       clickable: false
     };
@@ -359,11 +359,11 @@ var featureLayer = L.geoJson(null, {
     if (feature.properties && feature.properties["marker-color"]) {
       markerColor = feature.properties["marker-color"];
     } else {
-      markerColor = "#FF0000";
+      markerColor = "#CDDB49";
     }
     return L.circleMarker(latlng, {
-      radius: 4,
-      weight: 2,
+      radius: 6,
+      weight: 3,
       fillColor: markerColor,
       color: markerColor,
       opacity: 1,
@@ -541,7 +541,7 @@ function syncTable() {
 
 function identifyFeature(id) {
   var featureProperties = featureLayer.getLayer(id).feature.properties;
-  var content = "<table class='table table-striped table-bordered table-condensed'>";
+  var content = "<table id='tableinfo' class='table table-striped table-bordered table-condensed'>";
   $.each(featureProperties, function(key, value) {
     if (!value) {
       value = "";
@@ -551,17 +551,24 @@ function identifyFeature(id) {
     }
     $.each(properties, function(index, property) {
       if (key == property.value) {
-        if (property.info !== false) {
-          if(property.label == 'picture'){             
-              content += '<tr><th>picture</th><td><img src="'+value.split('\'')[1]+'" height="100px" width="100px"></td></tr>';
+        if (property.info !== false) {          
+          if(property.value == 'openTo'){
+            var opento=value.toString().split(',')
+            var badges=""
+            for (let index = 0; index < opento.length; index++) {
+              badges+='<span  class="badge badge-pill badge-success" style="background-color:#518EF2">'+opento[index]+'</span>';              
+            }
+            content += '<tr><th>Open To</th><td style="text-align:center">'+badges+'</td></tr>';
+          }else if(property.label == 'picture'){            
+              content += '<tr><th>picture</th><td style="text-align:center"><img src="'+value.split('\'')[1]+'" height="100px" width="100px"></td></tr>';
           }else{
-            content += "<tr><th>" + property.label + "</th><td>" + value + "</td></tr>";
+            content += '<tr><th>' + property.label + '</th><td style="text-align:center">' + value + '</td></tr>';
           }
         }
       }
     });
   });
-  content += "<table>";
+  content += "</table>";
   $("#feature-info").html(content);
   $("#featureModal").modal("show");
 }
