@@ -82,7 +82,7 @@ var properties = [{
 },
 {
   value: "locationName",
-  label: "City, Country",
+  label: "City/Country",
   table: {
     visible: true
   },
@@ -114,24 +114,45 @@ var properties = [{
     type: "string"
   }
 },  
+{
+  value: "compensations",
+  label: "Compensations",
+  table: {
+    visible: false
+  },
+  filter: {
+    type: "string"
+  }
+},
+{
+  value: "created",
+  label: "Created Account",
+  table: {
+    visible: true,
+    sortable: true
+  },
+  filter: {
+    type: "date"
+  }
+},
 
 ];
 
 function drawCharts() {
-  // magnitudes en el tiempo
+  // Created vs Weight Chart
   $(function() {
      
-    var resul = alasql("SELECT fecha_boletin AS fecha, magnitud AS magnitud FROM ?", [features]);
+    var resul = alasql("SELECT created AS fecha, weight AS name FROM ?", [features]);
     
-    var columns_date = $.map(resul, function(fecha_boletin) {
-      return [fecha_boletin.fecha];
+    var columns_date = $.map(resul, function(created) {
+      return [created.fecha];
     }); 
 
     var columns_dato = $.map(resul, function(magnitudes) {
-      return [magnitudes.magnitud];
+      return [magnitudes.name];
     });
     columns_date.unshift('x')
-    columns_dato.unshift('Magnitud(Mw) Año:2020')
+    columns_dato.unshift('Users')
 
     var chart = c3.generate({
         bindto: "#status-chart",
@@ -146,14 +167,14 @@ function drawCharts() {
                 type: 'timeseries',
                 localtime: false,
                 tick: {
-                    format: '%m-%d'
+                    format: '%y-%m-%d'
                 }
             }
         }
     });
   });
 
-  // conteo tipo de boletines
+  // User Verified Chart
   $(function() {
     var result = alasql("SELECT verified AS label, COUNT(*) AS total FROM ? GROUP BY verified", [features]);
     var columns = $.map(result, function(verified) {
@@ -169,16 +190,15 @@ function drawCharts() {
     });
   });
 
-  // Size
+  // Compensations Chart
   $(function() {
     var sizes = [];
-    var regeneration = alasql("SELECT 'Magnitud (< 3\")' AS category, COUNT(*) AS total FROM ? WHERE CAST(magnitud as INT) < 3", [features]);
-    var sapling = alasql("SELECT 'Magnitud (3-4\")' AS category, COUNT(*) AS total FROM ? WHERE CAST(magnitud as INT) BETWEEN 3 AND 4", [features]);
-    var small = alasql("SELECT 'Magnitud (4-5\")' AS category, COUNT(*) AS total FROM ? WHERE CAST(magnitud as INT) BETWEEN 4 AND 5", [features]);
-    var medium = alasql("SELECT 'Magnitud (5-6\")' AS category, COUNT(*) AS total FROM ? WHERE CAST(magnitud as INT) BETWEEN 5 AND 6", [features]);
-    var large = alasql("SELECT 'Magnitud (6-7\")' AS category, COUNT(*) AS total FROM ? WHERE CAST(magnitud as INT) BETWEEN 6 AND 7", [features]);
-    var giant = alasql("SELECT 'Magnitud (> 7\")' AS category, COUNT(*) AS total FROM ? WHERE CAST(magnitud as INT) > 7", [features]);
-    sizes.push(regeneration, sapling, small, medium, large, giant);
+    var regeneration = alasql("SELECT 'Alaska/North America' AS category, COUNT(*) AS total FROM ? WHERE CAST(Long as FLOAT) < -81", [features]);
+    var sapling = alasql("SELECT 'Latin America' AS category, COUNT(*) AS total FROM ? WHERE CAST(Long as FLOAT) BETWEEN -81 AND -34", [features]);
+    var small = alasql("SELECT 'Europa/Africa/Emiratos' AS category, COUNT(*) AS total FROM ? WHERE CAST(Long as FLOAT) BETWEEN -34 AND 50", [features]);
+    var medium = alasql("SELECT 'Asia/Indonesia/Australia' AS category, COUNT(*) AS total FROM ? WHERE CAST(Long as FLOAT) BETWEEN 50 AND 129", [features]);
+    var large = alasql("SELECT 'Japon/New Zeland' AS category, COUNT(*) AS total FROM ? WHERE CAST(Long as FLOAT) > 129", [features]);
+    sizes.push(regeneration, sapling, small, medium, large);
     var columns = $.map(sizes, function(size) {
       return [[size[0].category, size[0].total]];
     });
@@ -192,9 +212,9 @@ function drawCharts() {
     });
   });
 
-  // Species
+  // Count of OpenTo Chart
   $(function() {
-    var result = alasql("SELECT reporte AS label, COUNT(*) AS total FROM ? GROUP BY reporte ORDER BY label ASC", [features]);
+    var result = alasql("SELECT openTo AS label, COUNT(*) AS total FROM ? GROUP BY openTo ORDER BY label ASC", [features]);
     var chart = c3.generate({
         bindto: "#species-chart",
         size: {
@@ -561,6 +581,20 @@ function identifyFeature(id) {
             content += '<tr><th>Open To</th><td style="text-align:center">'+badges+'</td></tr>';
           }else if(property.label == 'picture'){            
               content += '<tr><th>picture</th><td style="text-align:center"><img src="'+value.split('\'')[1]+'" height="100px" width="100px"></td></tr>';
+          }else if(property.value == 'compensations'){            
+            content += '<tr><th>Compensations</th><td style="text-align:center">';
+            
+            if(value.hasOwnProperty('freelancer')){
+              content +='<i>Freelancer</i>: '+value['freelancer']['currency']+value['freelancer']['amount']+'/<i>'+value['freelancer']['periodicity']+'</i>'+'<br>'
+            }
+            if(value.hasOwnProperty('employee')){
+              content +='<i>Employee</i>: '+value['employee']['currency']+value['employee']['amount']+'/<i>'+value['employee']['periodicity']+'</i>'+'<br>'
+            }
+            if(value.hasOwnProperty('intern')){
+              content +='<i>Intern</i>: '+value['intern']['currency']+value['intern']['amount']+'/<i>'+value['intern']['periodicity']+'</i>'        
+            }
+              
+            content +='</td></tr>';
           }else{
             content += '<tr><th>' + property.label + '</th><td style="text-align:center">' + value + '</td></tr>';
           }
