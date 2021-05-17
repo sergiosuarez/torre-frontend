@@ -96,8 +96,7 @@
           </div>
           <div class="modal-body">
             <ul class="nav nav-tabs" id="aboutTabs">
-              <li class="active"><a href="#about-tab" data-toggle="tab"><i class="fa fa-question-circle"></i> About the Project</a></li>
-              <li><a href="#configuration-tab" data-toggle="tab"><i class="fa fa-gear"></i> Configuration</a></li>
+              <li class="active"><a href="#about-tab" data-toggle="tab"><i class="fa fa-question-circle"></i> About the Project</a></li> 
             </ul>
             <div class="tab-content" id="aboutTabsContent">
               <div class="tab-pane fade active in" id="about-tab">
@@ -113,23 +112,6 @@
                     <li class="list-group-item">Advanced, interactive GeoJSON data querying that integrates <a href="http://mistic100.github.io/jQuery-QueryBuilder/index.html" target="_blank">jQuery QueryBuilder</a> with <a href="http://alasql.org/" target="_blank">AlaSQL</a></li>
                     <li class="list-group-item">Advanced charting via <a href="http://c3js.org/" target="_blank">C3.js</a>, the D3-based reusable chart library</li>
                   </ul>                
-              </div>
-              <div class="tab-pane fade" id="configuration-tab" >
-                <p>This dashboard is designed to fetch a GeoJSON file and present the data in an interactive environment for exploration and analysis.</p>
-                <ol>
-                  <li>Fork or download the GitHub repo.</li>
-                  <li>Open the <em>assets/js/app.js</em> file and edit the <em>config</em> and <em>properties</em> variables.</li>
-                  <li>The <em>drawCharts()</em> function demonstrates how charts can be configured.</li>
-                  <li>Additional map layers can be added to the global <em>map</em> variable.</li>
-                </ol>
-                <p><strong>Notes</strong></p>
-                  <ul>
-                    <li>Attempting to load huge GeoJSON files will likely cause browser issues.</li>
-                    <li>The <em>properties.table</em> object accepts <a href="http://bootstrap-table.wenzhixin.net.cn/documentation/#column-options" target="_blank">Bootstrap Table column options</a>.</li>
-                    <li>The <em>properties.filter</em> object accepts <a href="http://mistic100.github.io/jQuery-QueryBuilder/index.html#filters" target="_blank">jQuery QueryBuilder filter options</a>.</li>
-                    <li>Setting the <em>filter.values</em> property to an empty array ([]) will fetch all the distinct values for that property.</li>
-                    <li>Setting the <em>table</em>, <em>filter</em>, or <em>info</em> objects to <em>false</em> will hide them from that component.</li>
-                  </ul>
               </div>
             </div>
           </div>

@@ -1,5 +1,9 @@
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const skill = urlParams.get('skill')
+const pages = urlParams.get('page')
 var config = {
-  geojson: "http://209.145.62.164:8000/get_request_peoplexskill?skill=PYTHON",
+  geojson: "http://209.145.62.164:8000/get_request_peoplexskill?parameters="+skill+","+pages,
   title: "Torre Map Dashboard",
   layerName: "Users",
   hoverProperty: "name",
@@ -219,6 +223,8 @@ function drawCharts() {
         bindto: "#species-chart",
         size: {
           height: 300
+        },title: {
+          text: 'For the use of a lot of information you can use the mouse scroll to zoom to the bars.'
         },
         data: {
           json: result,
@@ -229,14 +235,18 @@ function drawCharts() {
           type: "bar",
           labels: true
         },
+        zoom: {
+          enabled: true,
+          extent: [1, 5] // enable more zooming
+        },
         axis: {
-          rotated: true,
+          rotated: true, 
           x: {
-            type: "category"
-          }
+            type: "category", 
+          } 
         },
         legend: {
-          show: false
+          show: true
         }
     });
   });

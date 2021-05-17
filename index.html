@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Educational registration form</title>
+    <title>Torre Map Dashboard - Search</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-    <style>
+    <link rel="icon" href="assets/img/torre3.png">
+<style>
       html, body {
       min-height: 100%;
       }
@@ -140,9 +141,8 @@
           <h2>Search People in the map for Skill</h2>
         </div>
         <div class="info">
-          <input class="fname" type="text" name="skill" placeholder="Skill">
-          <!--input type="text" name="name" placeholder="Email"-->
-          <select>
+          <input class="fname" type="text" id="skill" name="skill" placeholder="Skill">
+          <select id="pages">
             <option value="course-type" selected>Page Size*</option>
             <option value="20">20</option>
             <option value="50">50</option>
@@ -152,8 +152,17 @@
         <div class="checkbox">
           <input type="checkbox" name="checkbox"><span>I agree to the <a href="https://accounts.torre.co/privacy/">Privacy Policy for TorreMaps.</a></span>
         </div>
-        <button type="submit" href="/">Submit</button>
+        <button id="btstart" type="button">Submit</button>
+        
       </form>
     </div>
-  </body>
+    <script>
+      document.getElementById("btstart").onclick = function() {
+        var skill = document.getElementById("skill").value;
+        var pages = document.getElementById("pages");
+        var text= pages.options[pages.selectedIndex].text;  
+        window.location.href = "geoportal.html?skill="+skill+"&page="+text;
+      }; 
+    </script>
+  </body>  
 </html>
