@@ -1,5 +1,5 @@
 var config = {
-  geojson: "http://209.145.62.164:8000/get_request_peoplexskill?skill=PHP",
+  geojson: "http://209.145.62.164:8000/get_request_peoplexskill?skill=PYTHON",
   title: "Torre Map Dashboard",
   layerName: "Users",
   hoverProperty: "id",
@@ -568,6 +568,8 @@ function identifyFeature(id) {
       }
     });
   });
+
+  content += '<tr><th></th><td style="text-align:center"><button class="btn btn-lg btn-secondary"><i class="fa fa-user"></i> Signal</button></td></tr>';
   content += "</table>";
   $("#feature-info").html(content);
   $("#featureModal").modal("show");
@@ -701,3 +703,11 @@ $("#download-pdf-btn").click(function() {
 $("#chartModal").on("shown.bs.modal", function (e) {
   drawCharts();
 });
+
+// add location control to global name space for testing only
+// on a production site, omit the "lc = "!
+lc = L.control.locate({
+  strings: {
+      title: "Show me where I am!"
+  }
+}).addTo(map);

@@ -10,25 +10,6 @@ body {
   height: 45%;
   padding: 0;
 }
-.btn-secondary,
-.btn-secondary:hover,
-.btn-secondary:active,
-.btn-secondary:visited,
-.btn-secondary:focus,
-.btn-default,
-.btn-default:hover,
-.btn-default:active,
-.btn-default:visited,
-.btn-default:focus,
-.leaflet-control,
-.modal-content,
-.panel-primary,
-.list-group{
-    background-color: #222222;
-    border-color: #CDDB49;
-    color: #CDDB49;
-}
-
 
 #table-container { 
   height: 55%;
@@ -161,4 +142,33 @@ tbody tr {
   .leaflet-control-container {
     display: none !important;
   }
+}
+
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:visited,
+.btn-secondary:focus,
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus,
+.btn-info,
+.btn-info:hover,
+.btn-info:active,
+.btn-info:visited,
+.btn-info:focus,
+.btn-default,
+.btn-default:hover,
+.btn-default:active,
+.btn-default:visited,
+.btn-default:focus,
+.leaflet-control,
+.modal-content,
+.panel-primary,
+.list-group-item{
+    background-color: #222222;
+    border-color: #CDDB49;
+    color: #CDDB49;
 }
