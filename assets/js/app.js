@@ -428,7 +428,7 @@ var featureLayer = L.geoJson(null, {
 $.getJSON(config.geojson, function (data) {
   geojson = data;
   if(geojson.features.length==0){
-    alert('Sorry there is no data for this query :c')
+    alert('Sorry there is no data for this query, Try with a skill :c')
     $("#loading-mask").hide();
     window.location.href = "index.html"
   }else{
